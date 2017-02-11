@@ -7,24 +7,12 @@ pipeline {
   }
 
   stages {
-    stage('Build') { 
-      steps { 
-        ansiColor('xterm') {
-          sh 'echo build'
-        }
-      }
-    }
-    stage('Test'){
-      steps {
-        ansiColor('xterm') {
-          sh 'echo test'
-        }	
-      }
-    }
-    stage('Deploy') {
+    stage('Build') {
       steps {
         sh 'echo access key $AWS_ACCESS_KEY_ID'
         sh 'echo secret access key $AWS_SECRET_ACCESS_KEY'
+        sh 'echo branch_name $BRANCH_NAME'
+        sh 'echo change_id $CHANGE_ID'
       }
     }
   }
