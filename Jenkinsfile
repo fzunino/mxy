@@ -9,10 +9,18 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        script {
+            if (env.CHANGE_ID == null) {
+                env.TAG = 'latest'
+            } else {
+                env.TAG = "pr-${env.CHANGE_ID}"
+            }
+        }
         sh 'echo access key $AWS_ACCESS_KEY_ID'
         sh 'echo secret access key $AWS_SECRET_ACCESS_KEY'
-        sh 'echo branch_name $BRANCH_NAME'
-        sh 'echo change_id $CHANGE_ID'
+        sh 'echo BRANCH_NAME $BRANCH_NAME'
+        sh 'echo CHANGE_ID $CHANGE_ID'
+        sh 'echo TAG $TAG'
       }
     }
   }
