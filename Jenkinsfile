@@ -7,24 +7,20 @@ pipeline {
   }
 
   stages {
-    stage('Build') { 
-      steps { 
-        ansiColor('xterm') {
-          sh 'echo build'
+    stage('Build') {
+      steps {
+        script {
+            if (env.CHANGE_ID == null) {
+                env.TAG = 'latest'
+            } else {
+                env.TAG = "pr-${env.CHANGE_ID}"
+            }
         }
-      }
-    }
-    stage('Test'){
-      steps {
-        ansiColor('xterm') {
-          sh 'echo test'
-        }	
-      }
-    }
-    stage('Deploy') {
-      steps {
         sh 'echo access key $AWS_ACCESS_KEY_ID'
         sh 'echo secret access key $AWS_SECRET_ACCESS_KEY'
+        sh 'echo BRANCH_NAME $BRANCH_NAME'
+        sh 'echo CHANGE_ID $CHANGE_ID'
+        sh 'echo TAG $TAG'
       }
     }
   }
